@@ -4,8 +4,8 @@ from pymongo import MongoClient
 class Database:
     
     def __init__(self):
-        current_script_dir = os.path.dirname(os.path.abspath(__file__))
-        cert_dir = os.path.join(current_script_dir, '..', 'access.pem')
+        jot_directory = os.path.expanduser('~/.jot')
+        cert_dir = os.path.join(jot_directory, 'access.pem')
         
         uri = "mongodb+srv://cluster0.vxnl1pi.mongodb.net/?authSource=%24external&authMechanism=MONGODB-X509&retryWrites=true&w=majority&appName=Cluster0"
         client = MongoClient(uri,

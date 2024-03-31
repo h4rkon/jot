@@ -1,18 +1,25 @@
 import click
 
-from database import Database
+from .database import Database
 from pymongo import ASCENDING, DESCENDING
-from screen import Table
-from model import Note
+from .screen import Table
+from .model import Note
 
 
 collection = None
 next_id = None
 
 
+def initialize_db():
+    global collection, next_id
+    db = Database()
+    collection = db.get_collection()
+    next_id = db.next_index
+
+
 @click.group()
 def jot():
-    pass
+    initialize_db()
 
 
 @jot.command()
@@ -51,8 +58,8 @@ def list(sort, direction, tag):
     table.print()
 
 
-if __name__ == "__main__":
-    db = Database()
-    collection = db.get_collection()
-    next_id = db.next_index
+def main():
     jot()
+
+if __name__ == "__main__":
+    main()
