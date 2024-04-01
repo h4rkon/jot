@@ -1,4 +1,6 @@
 import click
+import os
+import time
 
 from .database import Database
 from pymongo import ASCENDING, DESCENDING
@@ -56,6 +58,29 @@ def list(sort, direction, tag):
         notes_for_processing = notes_for_processing + [note]
     table = Table(notes_for_processing)
     table.print()
+    
+
+
+
+
+@jot.command()
+def tasks():
+    
+    try:
+        
+        while True:
+            os.system('clear')
+
+            notes = collection.find({"due_date": {"$ne": None}}).sort('due_date', 1)
+            notes_for_processing = []
+            for note in notes:
+                notes_for_processing = notes_for_processing + [note]
+            table = Table(notes_for_processing)
+            table.print()
+            
+            time.sleep(5)
+    except KeyboardInterrupt:
+        click.echo("Exiting...")
 
 
 def main():
